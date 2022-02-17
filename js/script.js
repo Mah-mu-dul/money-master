@@ -8,17 +8,14 @@ function value(id) {
 }
 
 // function for inner text 
-function innerText(id) {
+function innerText(id,msg) {
     const innerText = document.getElementById(id).innerText
+    document.getElementById(id).innerText = msg 
     return innerText
 }
 
 
-
-
-
-
-
+const error = document.getElementById('error')
 
 
 
@@ -54,12 +51,21 @@ document.getElementById('calculate-btn').addEventListener('click', function rema
 
         }
         else{
-            console.log('total cost is greater then  income');
+            document.getElementById('alert').style.display = 'block'
+            document.getElementById('message').innerText = 'total cost is greater then  income'
         }
 
-    }   
+    
+    } 
+    else if(foodCost <0 || rentCost<0 || clotheCost <0 || income<0){
+        document.getElementById('alert').style.display = 'block'
+        innerText('message','please input  positive number') 
+        
+    }
+    
     else{
-        console.log('Please input a valid number ');
+        document.getElementById('alert').style.display = 'block'
+        innerText('message','Please input a valid number ') 
     }
 })
 
@@ -79,15 +85,24 @@ document.getElementById('save').addEventListener('click',function save() {
 
 
     // calculation for parcent remain
-    const percentRemain = income*remain/100
-    if (saveInput < percentRemain) {
     const saveAmount = income * saveInput/100
+
+    if (saveAmount < remain && saveAmount>=0) {
+    
     document.getElementById('saving-amount').innerText = saveAmount
+    document.getElementById('remaining-balance').innerText = remain-saveAmount
+    }
+    else if(saveInput<0){
+        document.getElementById('alert').style.display = 'block'
+        innerText('message','enter a positive number  ')
+        
     }
     else{
-        console.log('save percentage is bigger then remain amount');
-        console.log('you can save only ', remain,' Taka');
-
+        document.getElementById('alert').style.display = 'block'
+        innerText('message','you  have not enough money to save  ')
     }
 })
-
+document.getElementById('got-it').addEventListener('click',function () {
+    document.getElementById('alert').style.display = 'none'
+    
+})
